@@ -6,6 +6,8 @@
 __author__      = "Philip Chase(pbc@ufl.edu, Chris Barnes(cpb@ufl.edu), Roy Keyes (keyes@ufl.edu), Alex Loiacono (atloiaco@ufl.edu)"
 __copyright__   = "Copyright 2015, CTS-IT University of Florida"
 
+import itertools
+
 
 class fuzzyMeasure:
     '''A class to produce a fuzzy measure of based on a list of criteria'''
@@ -15,21 +17,31 @@ class fuzzyMeasure:
         self.data = []
         #self.data = make_all_subsets(1..number_of_criteria)
 
-    def make_all_subsets(list_of_members):
+    def make_all_subsets(self,list_of_members):
         # make every possible subsets of given list_of_members
         # for size in (list_of_members):
             # use combinations to enumerate all combinations of size elements
             # append all combinations to self.data
 
+        self.set_of_all_subsets = set([])
+
+        for i in range(len(list_of_members),-1,-1):
+            self.set_of_all_subsets.update(frozenset(itertools.combinations(list_of_members,i)))
+
+        return sorted(self.set_of_all_subsets)
+
     def set_fm_for_trivial_cases(self):
+        pass
         # set fuzzyMeasure for empty and complete sets
-        # mu(∅) := 0
+        # mu() := 0
         # mu(X) := 1
 
     def set_fm_for_singleton_sets(self):
+        pass
         # set fuzzyMeasure for sets with exactly one member
 
     def set_fm_for_complex_sets(self):
+        pass
         # set fuzzyMeasure for sets with 2 or more members
 
         # Random generation of a fuzzy measure mu on a set X
@@ -48,7 +60,7 @@ class fuzzyMeasure:
 
                 # for each B in X:
                     # if mu(B) is defined:
-                        # case B ⊃ A :
+                        # case B is a superset of A :
                             # max = minimum(max, mu(B))
                             # break
                         # case other:
