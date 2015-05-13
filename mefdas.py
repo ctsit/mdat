@@ -14,8 +14,8 @@ class fuzzyMeasure:
 
     def __init__(self, number_of_criteria):
         # build a data structure to hold all possible subsets of a set of size = number_of_criteria
-        self.data = []
-        #self.data = make_all_subsets(1..number_of_criteria)
+        self.list_of_criteria = range(1,number_of_criteria + 1)
+        self.make_all_subsets(self.list_of_criteria)
 
     def make_all_subsets(self,list_of_members):
         # make every possible subsets of given list_of_members
