@@ -16,6 +16,9 @@ class fuzzyMeasure:
         # initialize a class to hold all fuzzyMeasure related objects
         self.list_of_members = list_of_members
 
+    def store_criteria(self, criteria):
+        self.list_of_members = set(criteria.keys())
+        self.criteria = criteria
 
     def make_all_subsets(self,list_of_members):
         # make every possible subsets of given list_of_members
