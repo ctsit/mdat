@@ -13,8 +13,9 @@ class fuzzyMeasure:
     '''A class to produce a fuzzy measure of based on a list of criteria'''
 
     def __init__(self, list_of_members=set([])):
-        # build a data structure to hold all possible subsets of list_of_members
-        self.make_all_subsets(list_of_members)
+        # initialize a class to hold all fuzzyMeasure related objects
+        self.list_of_members = list_of_members
+
 
     def make_all_subsets(self,list_of_members):
         # make every possible subsets of given list_of_members
