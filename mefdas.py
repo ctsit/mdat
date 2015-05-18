@@ -3,18 +3,22 @@
 
 """mefdas.py: Description of what foobar does."""
 
-__author__      = "Philip Chase(pbc@ufl.edu, Chris Barnes(cpb@ufl.edu), Roy Keyes (keyes@ufl.edu), Alex Loiacono (atloiaco@ufl.edu)"
-__copyright__   = "Copyright 2015, CTS-IT University of Florida"
+__author__ = "Philip Chase(pbc@ufl.edu, Chris Barnes(cpb@ufl.edu), " \
+             "Roy Keyes (keyes@ufl.edu), Alex Loiacono (atloiaco@ufl.edu)"
+__copyright__ = "Copyright 2015, CTS-IT University of Florida"
 
 import itertools
 
 
-class fuzzyMeasure:
+class FuzzyMeasure:
     '''A class to produce a fuzzy measure of based on a list of criteria'''
 
     def __init__(self, list_of_members=frozenset([])):
         # initialize a class to hold all fuzzyMeasure related objects
         self.list_of_members = list_of_members
+        self.set_of_all_subsets = set([])
+        self.criteria = ()
+        self.mu = ()
 
     def store_criteria(self, criteria):
         self.list_of_members = frozenset(criteria.keys())
