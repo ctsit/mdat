@@ -27,9 +27,9 @@ class TestFuzzyMeasure(TestCase):
     def test_make_all_subsets(self):
         list_of_members = set([])
         mu = mefdas.fuzzyMeasure()
-        a = set(['a','b','c','d','e','f','g','h','i','j','k','l','m'])
-        mu.make_all_subsets(a)
-        self.assertEqual(len(mu.set_of_all_subsets), 2**len(a))
+        mu.list_of_members = set(['a','b','c','d','e','f','g','h','i','j','k','l','m'])
+        mu.make_all_subsets()
+        self.assertEqual(len(mu.set_of_all_subsets), 2**len(mu.list_of_members))
 
     def test_set_fm_for_trivial_cases(self):
         self.assertEqual(1,1)

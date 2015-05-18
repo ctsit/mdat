@@ -20,7 +20,7 @@ class fuzzyMeasure:
         self.list_of_members = set(criteria.keys())
         self.criteria = criteria
 
-    def make_all_subsets(self,list_of_members):
+    def make_all_subsets(self):
         # make every possible subsets of given list_of_members
         # for size in (list_of_members):
             # use combinations to enumerate all combinations of size elements
@@ -28,8 +28,8 @@ class fuzzyMeasure:
 
         self.set_of_all_subsets = set([])
 
-        for i in range(len(list_of_members),-1,-1):
-            self.set_of_all_subsets.update(frozenset(itertools.combinations(list_of_members,i)))
+        for i in range(len(self.list_of_members),-1,-1):
+            self.set_of_all_subsets.update(frozenset(itertools.combinations(self.list_of_members,i)))
 
         return sorted(self.set_of_all_subsets)
 
