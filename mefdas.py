@@ -12,12 +12,12 @@ import itertools
 class fuzzyMeasure:
     '''A class to produce a fuzzy measure of based on a list of criteria'''
 
-    def __init__(self, list_of_members=set([])):
+    def __init__(self, list_of_members=frozenset([])):
         # initialize a class to hold all fuzzyMeasure related objects
         self.list_of_members = list_of_members
 
     def store_criteria(self, criteria):
-        self.list_of_members = set(criteria.keys())
+        self.list_of_members = frozenset(criteria.keys())
         self.criteria = criteria
 
     def make_all_subsets(self):
@@ -34,10 +34,10 @@ class fuzzyMeasure:
         return sorted(self.set_of_all_subsets)
 
     def set_fm_for_trivial_cases(self):
-        pass
         # set fuzzyMeasure for empty and complete sets
-        # mu() := 0
-        # mu(X) := 1
+        # mu[] := 0
+        # mu[X] := 1
+        self.mu = {(): 0, self.list_of_members: 1}
 
     def set_fm_for_singleton_sets(self):
         pass
