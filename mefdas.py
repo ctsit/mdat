@@ -41,11 +41,18 @@ class FuzzyMeasure:
         # set fuzzyMeasure for empty and complete sets
         # mu[] := 0
         # mu[X] := 1
-        self.mu = {(): 0, self.list_of_members: 1}
+        self.mu = {frozenset(): 0, self.list_of_members: 1}
 
     def set_fm_for_singleton_sets(self):
-        pass
-        # set fuzzyMeasure for sets with exactly one member
+        '''set fuzzyMeasure for sets with exactly one member'''
+
+        sum_of_criteria_values = 0
+        for criterium in self.criteria:
+            sum_of_criteria_values += self.criteria[criterium]
+
+        for criterium in self.criteria:
+            singleton_set = frozenset([criterium])
+            self.mu[singleton_set] = self.criteria[criterium]/sum_of_criteria_values
 
     def set_fm_for_complex_sets(self):
         pass
