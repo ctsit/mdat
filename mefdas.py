@@ -85,10 +85,7 @@ class FuzzyMeasure:
         # note: 'undefined' means we have not yet calculated and stored the value of mu for mu(foo)
         # create list of sets from X and shuffle the list
         list_of_all_subsets = list(self.set_of_all_subsets)
-        #print(list_of_all_subsets)
         random.shuffle(list_of_all_subsets)
-        #print(list_of_all_subsets)
-        #print self.mu
 
         for A in list_of_all_subsets:
             if self.mu.get(A) is None:
@@ -100,16 +97,13 @@ class FuzzyMeasure:
                 for B in subsets_of_A:
                     if self.mu.get(B) is not None:
                         minimum_for_mu_A = max(self.mu.get(B), minimum_for_mu_A)
-                #print "minimum of " + str(A) + str(minimum_for_mu_A)
 
                 for B in list_of_all_subsets:
                     if self.mu.get(B) is not None:
                         if B.issuperset(A):
                             maximum_for_mu_A = min(maximum_for_mu_A, self.mu.get(B))
-                #print "maximum of " + str(A) + str(maximum_for_mu_A)
 
                 self.mu[A] = random.uniform(minimum_for_mu_A,maximum_for_mu_A)
-        #print self.mu
 
 
 if __name__ == "__main__":
