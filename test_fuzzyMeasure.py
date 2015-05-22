@@ -52,3 +52,15 @@ class TestFuzzyMeasure(TestCase):
         self.assertEqual(mu.mu[frozenset(['c1'])],0.36)
         self.assertEqual(mu.mu[frozenset(['c2'])],0.4)
         self.assertEqual(mu.mu[frozenset(['c3'])],0.24)
+
+    def test_set_fm_for_complex_sets(self):
+        # initialize FuzzyMeasure instance
+        mu = mefdas.FuzzyMeasure()
+        criteria = {'c1': .9, 'c2': 1, 'c3': .6}
+        mu.store_criteria(criteria)
+        mu.make_all_subsets()
+        mu.set_fm_for_trivial_cases()
+        mu.set_fm_for_singleton_sets()
+        mu.set_fm_for_complex_sets()
+
+        self.assertEqual(1,1)

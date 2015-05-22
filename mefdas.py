@@ -8,7 +8,7 @@ __author__ = "Philip Chase(pbc@ufl.edu, Chris Barnes(cpb@ufl.edu), " \
 __copyright__ = "Copyright 2015, CTS-IT University of Florida"
 
 import itertools
-
+import random
 
 class FuzzyMeasure:
     '''A class to produce a fuzzy measure of based on a list of criteria'''
@@ -56,17 +56,25 @@ class FuzzyMeasure:
             self.mu[singleton_set] = self.criteria[criterium]/sum_of_criteria_values
 
     def set_fm_for_complex_sets(self):
-        pass
         # set fuzzyMeasure for sets with 2 or more members
 
         # Random generation of a fuzzy measure mu on a set X
         # note: 'undefined' means we have not yet calculated and stored the value of mu for mu(foo)
-        # create list of sets from X
-        # shuffle list of sets of X
-        # for each A in shuffled_list_X:
-            # if mu(A) is undefined:
-                # min := 0
-                # max := 1
+        # create list of sets from X and shuffle the list
+        list_of_all_subsets = list(self.set_of_all_subsets)
+        print(list_of_all_subsets)
+        random.shuffle(list_of_all_subsets)
+        print(list_of_all_subsets)
+        print self.mu
+
+        for A in list_of_all_subsets:
+            if self.mu.get(A) is not None:
+                print "For A=" + str(A) + " mu = " + str(self.mu[A])
+                min = 0
+                max = 1
+            else:
+                pass
+                print "no mu for A = " + str(A)
 
                 # subsets_of_A = make_all_subsets(A)
                 # for each B in subsets_of_A:
