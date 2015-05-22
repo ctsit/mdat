@@ -27,12 +27,21 @@ def make_all_subsets(list_of_members):
 class FuzzyMeasure:
     '''A class to produce a fuzzy measure of based on a list of criteria'''
 
-    def __init__(self, list_of_members=frozenset([])):
+    def __init__(self, criteria={}):
         # initialize a class to hold all fuzzyMeasure related objects
-        self.list_of_members = list_of_members
         self.set_of_all_subsets = set([])
-        self.criteria = ()
         self.mu = ()
+        self.criteria = criteria
+        self.list_of_members = frozenset(criteria.keys())
+        self.setup()
+
+    def setup(self):
+        if len(self.criteria) < 1 :
+            return
+        self.make_all_subsets()
+        self.set_fm_for_trivial_cases()
+        self.set_fm_for_singleton_sets()
+        self.set_fm_for_complex_sets()
 
     def store_criteria(self, criteria):
         self.list_of_members = frozenset(criteria.keys())

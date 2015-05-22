@@ -6,14 +6,15 @@ __author__ = 'pbc'
 
 class TestFuzzyMeasure(TestCase):
     def test_init(self):
-        self.list_of_members = frozenset([])
-        mu = mefdas.FuzzyMeasure(self.list_of_members)
+        # self.list_of_members = frozenset([])
+        mu = mefdas.FuzzyMeasure()
         self.assertEqual(len(mu.list_of_members), 0)
 
         mu = mefdas.FuzzyMeasure()
         self.assertEqual(len(mu.list_of_members), 0)
 
-        mu = mefdas.FuzzyMeasure(frozenset([1,2,3]))
+        criteria = {'c1': .9, 'c2': 1, 'c3': .6}
+        mu = mefdas.FuzzyMeasure(criteria)
         self.assertEqual(len(mu.list_of_members),3)
 
     def test_store_criteria(self):
@@ -32,12 +33,12 @@ class TestFuzzyMeasure(TestCase):
         self.assertEqual(len(mu.set_of_all_subsets), 2**len(mu.list_of_members))
 
     def test_set_fm_for_trivial_cases(self):
-        self.list_of_members = frozenset([1,2,3,4,5])
-        mu = mefdas.FuzzyMeasure(self.list_of_members)
+        mu = mefdas.FuzzyMeasure()
+        mu.list_of_members = frozenset([1,2,3,4,5])
         mu.make_all_subsets()
         mu.set_fm_for_trivial_cases()
-        self.assertEqual(mu.mu[frozenset()],0)
-        self.assertEqual(mu.mu[self.list_of_members],1)
+        self.assertEqual(mu.mu[frozenset([])],0)
+        self.assertEqual(mu.mu[mu.list_of_members],1)
 
     def test_set_fm_for_singleton_sets(self):
         # initialize FuzzyMeasure instance
@@ -55,12 +56,8 @@ class TestFuzzyMeasure(TestCase):
 
     def test_set_fm_for_complex_sets(self):
         # initialize FuzzyMeasure instance
-        mu = mefdas.FuzzyMeasure()
         criteria = {'c1': .9, 'c2': .8, 'c3': .6, 'c4': .2}
-        mu.store_criteria(criteria)
-        mu.make_all_subsets()
-        mu.set_fm_for_trivial_cases()
-        mu.set_fm_for_singleton_sets()
-        mu.set_fm_for_complex_sets()
+        mu = mefdas.FuzzyMeasure(criteria)
+        #print mu.mu
 
-        self.assertEqual(1,1)
+        self.assertEqual(1, 1)
