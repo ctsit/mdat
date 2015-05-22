@@ -49,17 +49,7 @@ class FuzzyMeasure:
 
     def make_all_subsets(self):
         # make every possible subsets of given list_of_members
-        # for size in (list_of_members):
-            # use combinations to enumerate all combinations of size elements
-            # append all combinations to self.data
-
-        self.set_of_all_subsets = set([])
-
-        for i in range(len(self.list_of_members),-1,-1):
-            for element in itertools.combinations(self.list_of_members,i):
-                self.set_of_all_subsets.add(frozenset(element))
-
-        return sorted(self.set_of_all_subsets)
+        self.set_of_all_subsets = make_all_subsets(self.list_of_members)
 
     def set_fm_for_trivial_cases(self):
         # set fuzzyMeasure for empty and complete sets
