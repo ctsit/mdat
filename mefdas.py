@@ -33,7 +33,8 @@ class FuzzyMeasure:
         self.set_of_all_subsets = set([])
 
         for i in range(len(self.list_of_members),-1,-1):
-            self.set_of_all_subsets.update(frozenset(itertools.combinations(self.list_of_members,i)))
+            for element in itertools.combinations(self.list_of_members,i):
+                self.set_of_all_subsets.add(frozenset(element))
 
         return sorted(self.set_of_all_subsets)
 
