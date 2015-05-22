@@ -10,6 +10,20 @@ __copyright__ = "Copyright 2015, CTS-IT University of Florida"
 import itertools
 import random
 
+def make_all_subsets(list_of_members):
+        # make every possible subsets of given list_of_members
+        # for size in (list_of_members):
+            # use combinations to enumerate all combinations of size elements
+            # append all combinations to self.data
+
+        set_of_all_subsets = set([])
+
+        for i in range(len(list_of_members),-1,-1):
+            for element in itertools.combinations(list_of_members,i):
+                set_of_all_subsets.add(frozenset(element))
+
+        return sorted(set_of_all_subsets)
+
 class FuzzyMeasure:
     '''A class to produce a fuzzy measure of based on a list of criteria'''
 
@@ -62,35 +76,31 @@ class FuzzyMeasure:
         # note: 'undefined' means we have not yet calculated and stored the value of mu for mu(foo)
         # create list of sets from X and shuffle the list
         list_of_all_subsets = list(self.set_of_all_subsets)
-        print(list_of_all_subsets)
+        #print(list_of_all_subsets)
         random.shuffle(list_of_all_subsets)
-        print(list_of_all_subsets)
-        print self.mu
+        #print(list_of_all_subsets)
+        #print self.mu
 
         for A in list_of_all_subsets:
-            if self.mu.get(A) is not None:
-                print "For A=" + str(A) + " mu = " + str(self.mu[A])
-                min = 0
-                max = 1
-            else:
-                pass
-                print "no mu for A = " + str(A)
+            if self.mu.get(A) is None:
+                minimum_for_mu_A = 0
+                maximum_for_mu_A = 1
 
-                # subsets_of_A = make_all_subsets(A)
-                # for each B in subsets_of_A:
-                    # if mu(B) is defined:
-                        # min = maximum(mu(B), min)
+                subsets_of_A = make_all_subsets(A)
 
-                # for each B in X:
-                    # if mu(B) is defined:
-                        # case B is a superset of A :
-                            # max = minimum(max, mu(B))
-                            # break
-                        # case other:
-                            # do nothing
-                    # else:
-                        # mu(B) is undefined so do nothing
-                # mu(A) := random value between min and max
+                for B in subsets_of_A:
+                    if self.mu.get(B) is not None:
+                        minimum_for_mu_A = max(self.mu.get(B), minimum_for_mu_A)
+                #print "minimum of " + str(A) + str(minimum_for_mu_A)
+
+                for B in list_of_all_subsets:
+                    if self.mu.get(B) is not None:
+                        if B.issuperset(A):
+                            maximum_for_mu_A = min(maximum_for_mu_A, self.mu.get(B))
+                #print "maximum of " + str(A) + str(maximum_for_mu_A)
+
+                self.mu[A] = random.uniform(minimum_for_mu_A,maximum_for_mu_A)
+        #print self.mu
 
 
 if __name__ == "__main__":

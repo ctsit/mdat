@@ -56,7 +56,7 @@ class TestFuzzyMeasure(TestCase):
     def test_set_fm_for_complex_sets(self):
         # initialize FuzzyMeasure instance
         mu = mefdas.FuzzyMeasure()
-        criteria = {'c1': .9, 'c2': 1, 'c3': .6}
+        criteria = {'c1': .9, 'c2': .8, 'c3': .6, 'c4': .2}
         mu.store_criteria(criteria)
         mu.make_all_subsets()
         mu.set_fm_for_trivial_cases()
