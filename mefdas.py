@@ -99,6 +99,8 @@ class FuzzyMeasure:
 class ChoquetIntegral:
     ''' A class to calculate the Choquet Integral given a dictionary of criteria and a related fuzzy measure.
 
+        Inputs
+        ------
         The keys in the dictionary of criteria must match the names of the set members used to generate
         the keys to the fuzzy measure values. e.g. the keys in these criteria
 
@@ -121,6 +123,11 @@ class ChoquetIntegral:
                 frozenset(['c2', 'c3']): 0.41548536225285937,
                 frozenset(['c1', 'c2', 'c3']): 1
             }
+
+        Outputs
+        ------
+        The class returns a single real number that is the Choquet Integral.  This value is a product of the
+        differences between sorted criteria values and the corresponding fuzzy measures.
 
     '''
 
