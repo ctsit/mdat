@@ -9,6 +9,7 @@ __copyright__ = "Copyright 2015, CTS-IT University of Florida"
 
 import itertools
 import random
+import operator
 
 def make_all_subsets(list_of_members):
         # make every possible subsets of given list_of_members
@@ -128,9 +129,18 @@ class ChoquetIntegral:
         self.criteria = criteria
         self.mu = fuzzyMeasure
 
-    def sort_criteria_by_value(self):
+    def get_criteria_keys_sorted_by_value(self):
         '''create the attribute, sigma, a list of criteria sorted by value'''
-        pass
+        self.criteria_keys_sorted_by_value = []
+
+        # sort the criteria by value
+        criteria_sorted_by_value = sorted(self.criteria.items(), key=operator.itemgetter(1))
+
+        # make a list of the criteria keys in the
+        for criterium in criteria_sorted_by_value:
+            self.criteria_keys_sorted_by_value.append(criterium[0])
+
+        return self.criteria_keys_sorted_by_value
 
     def calculate(self):
         '''Calculate the Choquet Integral and return just that value'''
