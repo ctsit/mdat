@@ -95,6 +95,48 @@ class FuzzyMeasure:
 
                 self.mu[A] = random.uniform(minimum_for_mu_A,maximum_for_mu_A)
 
+class ChoquetIntegral:
+    ''' A class to calculate the Choquet Integral given a dictionary of criteria and a related fuzzy measure.
+
+        The keys in the dictionary of criteria must match the names of the set members used to generate
+        the keys to the fuzzy measure values. e.g. the keys in these criteria
+
+            {
+                'c1': 0.2,
+                'c2': 0.4,
+                'c3': 0.1
+            }
+
+        could be used to generate the frozensets that are used as the key values to look up values in this dictionary
+        of fuzzy measures
+
+            {
+                frozenset([]): 0,
+                frozenset(['c1']): 0.391304347826087,
+                frozenset(['c2']): 0.3478260869565218,
+                frozenset(['c3']): 0.2608695652173913,
+                frozenset(['c1', 'c2']): 0.7683779330072605,
+                frozenset(['c1', 'c3']): 0.8093446720056068,
+                frozenset(['c2', 'c3']): 0.41548536225285937,
+                frozenset(['c1', 'c2', 'c3']): 1
+            }
+
+    '''
+
+    def __init__(self,criteria={}, fuzzyMeasure={}):
+        '''instantiate a Choquet Integral object'''
+        self.criteria = criteria
+        self.mu = fuzzyMeasure
+
+    def sort_criteria_by_value(self):
+        '''create the attribute, sigma, a list of criteria sorted by value'''
+        pass
+
+    def calculate(self):
+        '''Calculate the Choquet Integral and return just that value'''
+        pass
+
+
 
 if __name__ == "__main__":
     import sys
