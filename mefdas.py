@@ -126,8 +126,8 @@ class ChoquetIntegral:
 
         Outputs
         ------
-        The class returns a single real number that is the Choquet Integral.  This value is a product of the
-        differences between sorted criteria values and the corresponding fuzzy measures.
+        The class returns a single real number that is the Choquet Integral.  This value is the sum of the
+        products of the differences between sorted criteria values and the corresponding fuzzy measures.
 
     '''
 
@@ -151,9 +151,21 @@ class ChoquetIntegral:
 
     def calculate(self):
         '''Calculate the Choquet Integral and return just that value'''
-        pass
 
+        # initialize variables for loop
+        self.utility=0
+        x_n_minus_1 = 0
+        my_keys = self.criteria_keys_sorted_by_value[:]
+        set_of_criteria = frozenset(my_keys)
 
+        for criterum in self.criteria_keys_sorted_by_value:
+            self.utility += (self.criteria[criterum] - x_n_minus_1) * self.mu[set_of_criteria]
+            # set up for next loop
+            x_n_minus_1 = self.criteria[criterum]
+            my_keys.pop(0)
+            set_of_criteria = frozenset(my_keys)
+
+        return self.utility
 
 if __name__ == "__main__":
     import sys
