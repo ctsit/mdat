@@ -9,6 +9,7 @@ __copyright__ = "Copyright 2015, CTS-IT University of Florida"
 
 import itertools
 import random
+import operator
 
 def make_all_subsets(list_of_members):
         # make every possible subsets of given list_of_members
@@ -94,6 +95,114 @@ class FuzzyMeasure:
                             maximum_for_mu_A = min(maximum_for_mu_A, self.mu.get(B))
 
                 self.mu[A] = random.uniform(minimum_for_mu_A,maximum_for_mu_A)
+
+class ChoquetIntegral:
+    ''' A class to calculate the Choquet Integral given a dictionary of criteria and a related fuzzy measure.
+
+        Inputs
+        ------
+        The keys in the dictionary of criteria must match the names of the set members used to generate
+        the keys to the fuzzy measure values. e.g. the keys in these criteria
+
+            {
+                'c1': 0.2,
+                'c2': 0.4,
+                'c3': 0.1
+            }
+
+        could be used to generate the frozensets that are used as the key values to look up values in this dictionary
+        of fuzzy measures
+
+            {
+                frozenset([]): 0,
+                frozenset(['c1']): 0.391304347826087,
+                frozenset(['c2']): 0.3478260869565218,
+                frozenset(['c3']): 0.2608695652173913,
+                frozenset(['c1', 'c2']): 0.7683779330072605,
+                frozenset(['c1', 'c3']): 0.8093446720056068,
+                frozenset(['c2', 'c3']): 0.41548536225285937,
+                frozenset(['c1', 'c2', 'c3']): 1
+            }
+
+        Outputs
+        ------
+        The class returns a single real number that is the Choquet Integral.  This value is the sum of the
+        products of the differences between sorted criteria values and the corresponding fuzzy measures.
+
+    '''
+
+    def __init__(self,criteria={}, fuzzyMeasure={}):
+        '''instantiate a Choquet Integral object'''
+        self.criteria = criteria
+        self.mu = fuzzyMeasure
+
+    def get_criteria_keys_sorted_by_value(self):
+        '''create the attribute, sigma, a list of criteria sorted by value'''
+        self.criteria_keys_sorted_by_value = []
+
+        # sort the criteria by value
+        criteria_sorted_by_value = sorted(self.criteria.items(), key=operator.itemgetter(1))
+
+        # make a list of the criteria keys in the
+        for criterium in criteria_sorted_by_value:
+            self.criteria_keys_sorted_by_value.append(criterium[0])
+
+        return self.criteria_keys_sorted_by_value
+
+    def calculate(self):
+        '''Calculate the Choquet Integral and return just that value'''
+
+        # initialize variables for loop
+        self.utility=0
+        x_n_minus_1 = 0
+        self.get_criteria_keys_sorted_by_value()
+        my_keys = self.criteria_keys_sorted_by_value[:]
+        set_of_criteria = frozenset(my_keys)
+
+        for criterum in self.criteria_keys_sorted_by_value:
+            self.utility += (self.criteria[criterum] - x_n_minus_1) * self.mu[set_of_criteria]
+            # set up for next loop
+            x_n_minus_1 = self.criteria[criterum]
+            my_keys.pop(0)
+            set_of_criteria = frozenset(my_keys)
+
+        return self.utility
+
+class BestAlternative:
+    '''A class to determine the best alternative given a matrix of labeled alternatives and labeled criteria'''
+
+    def __init__(self, scores={}):
+        pass
+
+    def get_criteria(self):
+        '''return a list containing labels for each criterium'''
+        pass
+
+    def sum_of_criteria_values(self):
+        '''return a dictionary of the sum of each criterium across the alternatives keyed on the criteria labels'''
+        pass
+
+    def get_alternatives(self):
+        '''return a list containing the labels for each alternative'''
+        pass
+
+    def get_values_for_an_alternative(self):
+        '''return a dictionary of values for a single alternative, keyed on criterium'''
+        pass
+
+    def calculate(self):
+        pass
+        # get_criteria from input
+        # compute sum_of_criteria_values based on input
+        # calculate fuzzyMeasure
+        #
+        # get_alternatives from input
+        # get_values_for_an_alternative from input
+        # for alternative in list_of_alternatives:
+        #     calculate ChoquetIntegral
+        #     store ChoquetIntegral keyed on alternative_label
+        #
+        # return alternative_label for the highest stored choquetIntegral
 
 
 if __name__ == "__main__":
