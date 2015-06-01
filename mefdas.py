@@ -168,6 +168,43 @@ class ChoquetIntegral:
 
         return self.utility
 
+class BestAlternative:
+    '''A class to determine the best alternative given a matrix of labeled alternatives and labeled criteria'''
+
+    def __init__(self, scores={}):
+        pass
+
+    def get_criteria(self):
+        '''return a list containing labels for each criterium'''
+        pass
+
+    def sum_of_criteria_values(self):
+        '''return a dictionary of the sum of each criterium across the alternatives keyed on the criteria labels'''
+        pass
+
+    def get_alternatives(self):
+        '''return a list containing the labels for each alternative'''
+        pass
+
+    def get_values_for_an_alternative(self):
+        '''return a dictionary of values for a single alternative, keyed on criterium'''
+        pass
+
+    def calculate(self):
+        pass
+        # get_criteria from input
+        # compute sum_of_criteria_values based on input
+        # calculate fuzzyMeasure
+        #
+        # get_alternatives from input
+        # get_values_for_an_alternative from input
+        # for alternative in list_of_alternatives:
+        #     calculate ChoquetIntegral
+        #     store ChoquetIntegral keyed on alternative_label
+        #
+        # return alternative_label for the highest stored choquetIntegral
+
+
 if __name__ == "__main__":
     import sys
     mefdas(int(sys.argv[1]))
