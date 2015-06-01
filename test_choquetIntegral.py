@@ -37,5 +37,26 @@ class TestChoquetIntegral(TestCase):
     }
     expected_ChoquetIntegral = 0.66875
     ci = mefdas.ChoquetIntegral(criteria=criteria, fuzzyMeasure=fuzzyMeasure)
-    ci.get_criteria_keys_sorted_by_value()
     self.assertAlmostEquals(ci.calculate(), expected_ChoquetIntegral)
+
+    # Run second test
+    criteria = {
+      'c1': 0.2,
+      'c2': 0.4,
+      'c3': 0.1
+    }
+
+    fuzzyMeasure = {
+      frozenset([]): 0,
+      frozenset(['c1']): 0.391304347826087,
+      frozenset(['c2']): 0.3478260869565218,
+      frozenset(['c3']): 0.2608695652173913,
+      frozenset(['c1', 'c2']): 0.7683779330072605,
+      frozenset(['c1', 'c3']): 0.8093446720056068,
+      frozenset(['c2', 'c3']): 0.41548536225285937,
+      frozenset(['c1', 'c2', 'c3']): 1
+    }
+
+    expected_ChoquetIntegral = 0.2464030107
+    ci2 = mefdas.ChoquetIntegral(criteria=criteria, fuzzyMeasure=fuzzyMeasure)
+    self.assertAlmostEquals(ci2.calculate(), expected_ChoquetIntegral)

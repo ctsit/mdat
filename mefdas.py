@@ -155,6 +155,7 @@ class ChoquetIntegral:
         # initialize variables for loop
         self.utility=0
         x_n_minus_1 = 0
+        self.get_criteria_keys_sorted_by_value()
         my_keys = self.criteria_keys_sorted_by_value[:]
         set_of_criteria = frozenset(my_keys)
 
