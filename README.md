@@ -2,6 +2,9 @@
 
 ## Medical Engine for Decision Assistance & Support
 
+[![Build Status](https://travis-ci.org/ctsit/MEfDAS.svg?branch=master)](https://travis-ci.org/ctsit/MEfDAS)
+[![Build Status](https://travis-ci.org/ctsit/MEfDAS.svg?branch=develop)](https://travis-ci.org/ctsit/MEfDAS)
+
 ## Requirements
 
 This project uses Travis CI for automated testing. Please revise the .travis.yml to reflect any changes in required libraries as changes are made to the software.
