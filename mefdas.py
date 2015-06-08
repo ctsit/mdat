@@ -10,6 +10,7 @@ __copyright__ = "Copyright 2015, CTS-IT University of Florida"
 import itertools
 import random
 import operator
+import json
 
 def make_all_subsets(list_of_members):
         # make every possible subsets of given list_of_members
@@ -169,10 +170,77 @@ class ChoquetIntegral:
         return self.utility
 
 class BestAlternative:
-    '''A class to determine the best alternative given a matrix of labeled alternatives and labeled criteria'''
+    ''' A class to determine the best alternative given a matrix of labeled alternatives and labeled criteria.
 
-    def __init__(self, scores={}):
-        pass
+        Input
+        -----
+
+        Input data can be in the form of a python dictionary or JSON string with this structure:
+
+        {
+            "scores": {
+                "accuracy": {
+                    "fit": "0.1",
+                    "sig": "0.2",
+                    "col": "0.3"
+                },
+                "comfort": {
+                    "fit": "0.1",
+                    "sig": "0.2",
+                    "col": "0.3"
+                },
+                "duration": {
+                    "fit": "0.1",
+                    "sig": "0.2",
+                    "col": "0.3"
+                },
+                "time": {
+                    "fit": "0.1",
+                    "sig": "0.2",
+                    "col": "0.3"
+                }
+            }
+        }
+
+        CSV should also be determined, but that input format is to be determined.
+
+        Output
+        ------
+
+        Output should be dict or json string with this structure:
+
+        {
+            "best_alternative": "fit",
+            "details": {
+                "choquet_scores": {
+                    "fit": "2.8",
+                    "sig": "1.2",
+                    "col": "2.0"
+                },
+                "library_version" : "1.0.3",
+                ...
+            }
+        }
+
+        As much or as few details as desired is acceptable. Only "best_alternative" is required.
+
+    '''
+
+    def __init__(self, scores={}, jsonScores='', csvScores=''):
+        '''Initialize BestAlternative instance and store input data.
+        Input must be the array of responses to N labeled criteria about M labeled alternatives.  '''
+        if len(scores) > 0:
+            self.scores=scores
+            return()
+        if len(jsonScores) > 0:
+            self.scores=json.loads(jsonScores)
+            return()
+        if len(csvScores) > 0:
+            print("error: csv input is not yet supported")
+            return(2)
+        else:
+            print("error: No input supplied")
+            return(3)
 
     def get_criteria(self):
         '''return a list containing labels for each criterium'''
