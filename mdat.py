@@ -1,7 +1,7 @@
 
 #!/usr/bin/env python
 
-"""mefdas.py: Description of what foobar does."""
+"""mdat.py: medical decision aid tool"""
 
 __author__ = "Philip Chase(pbc@ufl.edu, Chris Barnes(cpb@ufl.edu), " \
              "Roy Keyes (keyes@ufl.edu), Alex Loiacono (atloiaco@ufl.edu)"
@@ -275,4 +275,4 @@ class BestAlternative:
 
 if __name__ == "__main__":
     import sys
-    mefdas(int(sys.argv[1]))
+    mdat(int(sys.argv[1]))

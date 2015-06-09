@@ -1,5 +1,5 @@
 from unittest import TestCase
-import mefdas
+import mdat
 
 __author__ = 'pbc'
 

@@ -1,9 +1,9 @@
-# MEfDAS
+# MDAT
 
-## Medical Engine for Decision Assistance & Support
+## Medical Decision Aid Tool
 
-[![Build Status](https://travis-ci.org/ctsit/MEfDAS.svg?branch=master)](https://travis-ci.org/ctsit/MEfDAS)
-[![Build Status](https://travis-ci.org/ctsit/MEfDAS.svg?branch=develop)](https://travis-ci.org/ctsit/MEfDAS)
+[![Build Status](https://travis-ci.org/ctsit/mdat.svg?branch=master)](https://travis-ci.org/ctsit/mdat)
+[![Build Status](https://travis-ci.org/ctsit/mdat.svg?branch=develop)](https://travis-ci.org/ctsit/mdat)
 
 ## Requirements
 
