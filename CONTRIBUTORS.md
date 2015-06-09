@@ -1,6 +1,6 @@
-# MEfDAS Contributors
+# MDAT Contributors
 
-The MefDAS Project would not be possible without the generous contributions of
+The MDAT Project would not be possible without the generous contributions of
 our authors and contributors.
 
 François Modave provided funding and guidance on the algorithms.
