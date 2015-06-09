@@ -278,11 +278,13 @@ class BestAlternative:
 
     def get_criteria(self):
         '''return a list containing labels for each criterium'''
-        pass
+        list_of_criteria = self.scores.keys()
 
     def sum_of_criteria_values(self):
         '''return a dictionary of the sum of each criterium across the alternatives keyed on the criteria labels'''
-        pass
+        dict_of_sums = {}
+        for criteria in self.list_of_criteria:
+            dict_of_sums[criteria] = sum(float,self.scores[criteria].values())
 
     def get_alternatives(self):
         '''return a list containing the labels for each alternative'''
