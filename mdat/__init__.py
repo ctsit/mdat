@@ -11,7 +11,7 @@ import itertools
 import random
 import operator
 import json
-from jsonschema import validate
+import jsonschema
 
 def make_all_subsets(list_of_members):
         # make every possible subsets of given list_of_members
@@ -272,7 +272,7 @@ class BestAlternative:
                 }
             }
         '''
-        validate(jsonScores, json.loads(schema))
+        jsonschema.validate(jsonScores, json.loads(schema))
 
     def get_criteria(self):
         '''return a list containing labels for each criterium'''
