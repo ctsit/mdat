@@ -11,6 +11,9 @@ import itertools
 import random
 import operator
 import json
+import jsonschema
+import sys
+import argparse
 
 def make_all_subsets(list_of_members):
         # make every possible subsets of given list_of_members
@@ -177,52 +180,48 @@ class BestAlternative:
 
         Input data can be in the form of a python dictionary or JSON string with this structure:
 
-        {
-            "scores": {
+            {
                 "accuracy": {
-                    "fit": "0.1",
-                    "sig": "0.2",
-                    "col": "0.3"
+                    "fit": 0.1,
+                    "sig": 0.2,
+                    "col": 0.3
                 },
                 "comfort": {
-                    "fit": "0.1",
-                    "sig": "0.2",
-                    "col": "0.3"
+                    "fit": 0.4,
+                    "sig": 0.5,
+                    "col": 0.6
                 },
                 "duration": {
-                    "fit": "0.1",
-                    "sig": "0.2",
-                    "col": "0.3"
+                    "fit": 0.7,
+                    "sig": 0.8,
+                    "col": 0.9
                 },
                 "time": {
-                    "fit": "0.1",
-                    "sig": "0.2",
-                    "col": "0.3"
+                    "fit": 0.4,
+                    "sig": 0.3,
+                    "col": 0.2
                 }
             }
-        }
 
         CSV should also be determined, but that input format is to be determined.
 
         Output
         ------
 
-        Output should be dict or json string with this structure:
+        Output should be dict with this structure:
 
         {
             "best_alternative": "fit",
-            "details": {
-                "choquet_scores": {
-                    "fit": "2.8",
-                    "sig": "1.2",
-                    "col": "2.0"
-                },
-                "library_version" : "1.0.3",
-                ...
-            }
+            "choquet_scores": {
+                "fit": 2.8,
+                "sig": 1.2,
+                "col": 2.0
+            },
+            "library_version" : "1.0.3",
+            ...
         }
 
-        As much or as few details as desired is acceptable. Only "best_alternative" is required.
+        Only "best_alternative" is required.  Other output is optional and expandable.
 
     '''
 
@@ -230,17 +229,52 @@ class BestAlternative:
         '''Initialize BestAlternative instance and store input data.
         Input must be the array of responses to N labeled criteria about M labeled alternatives.  '''
         if len(scores) > 0:
+            self.setup(json.loads(json.dumps(scores)))
             self.scores=scores
-            return()
+            return(None)
         if len(jsonScores) > 0:
+            self.setup(json.loads(jsonScores))
             self.scores=json.loads(jsonScores)
-            return()
+            return(None)
         if len(csvScores) > 0:
             print("error: csv input is not yet supported")
-            return(2)
+            return(None)
         else:
             print("error: No input supplied")
-            return(3)
+            return(None)
+
+    def setup(self, jsonScores):
+        '''verify the jsonScores is structured correctly'''
+        schema = '''
+            {
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "title": "mdat input",
+                "description": "An input data set for the Medical Decision Aids Tool python library",
+                "type": "object",
+                "patternProperties": {
+                    "^.+$": {
+                        "$ref": "#definitions/alternatives"
+                    }
+                },
+                "minProperties": 1,
+                "definitions": {
+                    "alternatives": {
+                        "title": "alternative",
+                        "description": "an alternative to choose from",
+                        "type": "object",
+                        "patternProperties": {
+                            "^.+$": {
+                                "type": "number",
+                                "minimum" : 0,
+                                "maximum" : 1
+                            }
+                        },
+                        "minProperties": 2
+                    }
+                }
+            }
+        '''
+        jsonschema.validate(jsonScores, json.loads(schema))
 
     def get_criteria(self):
         '''return a list containing labels for each criterium'''
@@ -261,7 +295,6 @@ class BestAlternative:
         pass
 
     def calculate(self):
-        pass
         # get_criteria from input
         # compute sum_of_criteria_values based on input
         # calculate fuzzyMeasure
@@ -273,8 +306,127 @@ class BestAlternative:
         #     store ChoquetIntegral keyed on alternative_label
         #
         # return alternative_label for the highest stored choquetIntegral
+        resultJSONString = '''
+            {
+                "best_alternative": "fit",
+                "choquet_scores": {
+                    "fit": 2.8,
+                    "sig": 1.2,
+                    "col": 2.0
+                }
+            }
+        '''
+        result = json.loads(resultJSONString)
+        return(result)
+
+
+def main():
+    '''
+    A class to determine the best alternative given a matrix of labeled alternatives and labeled criteria.
+
+    Input
+    -----
+
+    Input data can be in the form of a JSON string with this structure:
+
+        {
+            "accuracy": {
+                "fit": 0.1,
+                "sig": 0.2,
+                "col": 0.3
+            },
+            "comfort": {
+                "fit": 0.4,
+                "sig": 0.5,
+                "col": 0.6
+            },
+            "duration": {
+                "fit": 0.7,
+                "sig": 0.8,
+                "col": 0.9
+            },
+            "time": {
+                "fit": 0.4,
+                "sig": 0.3,
+                "col": 0.2
+            }
+        }
+
+
+    Output
+    ------
+
+    Output data is either a string with the label of the best alternative or a json string in this format
+
+    {
+        "best_alternative": "fit",
+        "choquet_scores": {
+            "fit": 2.8,
+            "sig": 1.2,
+            "col": 2.0
+        }
+    }
+
+
+    Usage:
+
+        usage: mdat.py [-h] [-i {json}] [-o {json,brief}] [infile] [outfile]
+
+        Select the best of two or more alternatives given responses to a list of
+        criteria
+
+        positional arguments:
+          infile
+          outfile
+
+        optional arguments:
+          -h, --help            show this help message and exit
+          -i {json}, --input {json}
+                                Specify the file type used as input. Valid types: json
+          -o {json,brief}, --output {json,brief}
+                                Specify the file type used as input. Valid types:
+                                json, text
+    '''
+
+    # define the list of acceptable arguments
+    parser = argparse.ArgumentParser(
+        description='Select the best of two or more alternatives given responses to a list of criteria')
+    parser.add_argument('infile', nargs='?', type=argparse.FileType('r'), default=sys.stdin)
+    parser.add_argument('outfile', nargs='?', type=argparse.FileType('w'), default=sys.stdout)
+    parser.add_argument(
+        '-i',
+        '--input',
+        choices=['json'],
+        dest='input',
+        default='json',
+        help='Specify the file type used as input. Valid types: json')
+    parser.add_argument(
+        '-o',
+        '--output',
+        choices=['json', 'brief'],
+        dest='output',
+        default='brief',
+        help='Specify the file type used as input. Valid types: json, text')
+
+    # prepare the arguments we were given
+    args = parser.parse_args()
+
+    # Prepare the input
+    if args.input == 'json':
+        ba = BestAlternative(jsonScores=args.infile.read())
+    else:
+        print "Unsupported input type"
+        return()
+
+    # generate and return the output
+    if args.output == 'json':
+        args.outfile.write(json.dumps(ba.calculate()))
+    elif args.output == 'brief':
+        args.outfile.write(ba.calculate()['best_alternative'])
+    else:
+        print "Unsupported output type"
+        return()
 
 
 if __name__ == "__main__":
-    import sys
-    mdat(int(sys.argv[1]))
+    main()
