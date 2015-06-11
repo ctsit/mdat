@@ -210,18 +210,16 @@ class BestAlternative:
 
         {
             "best_alternative": "fit",
-            "details": {
-                "choquet_scores": {
-                    "fit": 2.8,
-                    "sig": 1.2,
-                    "col": 2.0
-                },
-                "library_version" : "1.0.3",
-                ...
-            }
+            "choquet_scores": {
+                "fit": 2.8,
+                "sig": 1.2,
+                "col": 2.0
+            },
+            "library_version" : "1.0.3",
+            ...
         }
 
-        As much or as few details as desired is acceptable. Only "best_alternative" is required.
+        Only "best_alternative" is required.  Other output is optional and expandable.
 
     '''
 
@@ -295,7 +293,6 @@ class BestAlternative:
         pass
 
     def calculate(self):
-        pass
         # get_criteria from input
         # compute sum_of_criteria_values based on input
         # calculate fuzzyMeasure
@@ -307,6 +304,18 @@ class BestAlternative:
         #     store ChoquetIntegral keyed on alternative_label
         #
         # return alternative_label for the highest stored choquetIntegral
+        resultJSONString = '''
+            {
+                "best_alternative": "fit",
+                "choquet_scores": {
+                    "fit": 2.8,
+                    "sig": 1.2,
+                    "col": 2.0
+                }
+            }
+        '''
+        result = json.loads(resultJSONString)
+        return(result)
 
 
 if __name__ == "__main__":
