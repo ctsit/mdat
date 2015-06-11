@@ -25,6 +25,15 @@ jsonstring = '''
     }
 '''
 
-print json.loads(jsonstring)
+jsonDict = json.loads(jsonstring)
 
+list_of_criteria = jsonDict.keys()
 
+print list_of_criteria
+
+dict_of_sums = {}
+
+for criteria in list_of_criteria:
+    dict_of_sums[criteria] = sum(jsonDict[criteria].values())
+
+print dict_of_sums
