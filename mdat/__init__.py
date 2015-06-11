@@ -208,7 +208,7 @@ class BestAlternative:
         Output
         ------
 
-        Output should be dict or json string with this structure:
+        Output should be dict with this structure:
 
         {
             "best_alternative": "fit",
