@@ -11,6 +11,7 @@ import random
 import operator
 import json
 import jsonschema
+from decimal import Decimal
 
 
 def make_all_subsets(list_of_members):
@@ -231,8 +232,8 @@ class BestAlternative:
             self.scores=scores
             return(None)
         if len(jsonScores) > 0:
-            self.setup(json.loads(jsonScores))
-            self.scores=json.loads(jsonScores)
+            self.setup(json.loads(jsonScores, parse_float=Decimal))
+            self.scores=json.loads(jsonScores, parse_float=Decimal)
             return(None)
         if len(csvScores) > 0:
             print("error: csv input is not yet supported")
@@ -272,17 +273,21 @@ class BestAlternative:
                 }
             }
         '''
-        jsonschema.validate(jsonScores, json.loads(schema))
+        jsonschema.validate(jsonScores, json.loads(schema,parse_float=Decimal))
 
     def get_criteria(self):
         '''return a list containing labels for each criterium'''
         list_of_criteria = self.scores.keys()
+        return list_of_criteria
 
     def sum_of_criteria_values(self):
         '''return a dictionary of the sum of each criterium across the alternatives keyed on the criteria labels'''
         dict_of_sums = {}
-        for criteria in self.list_of_criteria:
-            dict_of_sums[criteria] = sum(float,self.scores[criteria].values())
+        list_of_criteria = self.get_criteria()
+        for criteria in list_of_criteria:
+            dict_of_sums[criteria] = sum(self.scores[criteria].values())
+
+        return dict_of_sums
 
     def get_alternatives(self):
         '''return a list containing the labels for each alternative'''

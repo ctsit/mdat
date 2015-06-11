@@ -2,45 +2,55 @@ from unittest import TestCase
 from mdat import core
 import json
 import jsonschema
+from decimal import Decimal
 
 __author__ = 'pbc'
 
+jsonString = '''
+    {
+        "accuracy": {
+            "fit": 0.1,
+            "sig": 0.2,
+            "col": 0.3
+        },
+        "comfort": {
+            "fit": 0.4,
+            "sig": 0.5,
+            "col": 0.6
+        },
+        "duration": {
+            "fit": 0.7,
+            "sig": 0.8,
+            "col": 0.9
+        },
+        "time": {
+            "fit": 0.4,
+            "sig": 0.3,
+            "col": 0.2
+        }
+    }
+'''
 
 class TestBestAlternative(TestCase):
     def test_setup(self):
-        jsonString = '''
-            {
-                "accuracy": {
-                    "fit": 0.1,
-                    "sig": 0.2,
-                    "col": 0.3
-                },
-                "comfort": {
-                    "fit": 0.4,
-                    "sig": 0.5,
-                    "col": 0.6
-                },
-                "duration": {
-                    "fit": 0.7,
-                    "sig": 0.8,
-                    "col": 0.9
-                },
-                "time": {
-                    "fit": 0.4,
-                    "sig": 0.3,
-                    "col": 0.2
-                }
-            }
-        '''
         ba = core.BestAlternative(jsonScores=jsonString)
         ba.setup(jsonScores=json.loads(jsonString))
         self.assertEqual(1, 1)
 
     def test_get_criteria(self):
-        self.assertEqual(1, 1)
+        ba = core.BestAlternative(jsonScores=jsonString)
+        ba.setup(jsonScores=json.loads(jsonString))
+        list_of_criteria = ba.get_criteria()
+        expected_output = [u'accuracy', u'comfort', u'duration', u'time']
+        self.assertEqual(len(ba.get_criteria()),4)
+        self.assertEqual(sorted(list_of_criteria),expected_output)
 
     def test_sum_of_criteria_values(self):
-        self.assertEqual(1, 1)
+        ba = core.BestAlternative(jsonScores=jsonString)
+        ba.setup(jsonScores=json.loads(jsonString,parse_float=Decimal))
+        dict_of_sums = ba.sum_of_criteria_values()
+        expected_output = {u'duration': Decimal('2.4'), u'comfort': Decimal('1.5'), u'accuracy': Decimal('0.6'), u'time': Decimal('0.9')}
+        self.assertEqual(dict_of_sums, expected_output)
 
     def test_get_alternatives(self):
         self.assertEqual(1, 1)
