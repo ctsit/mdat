@@ -1,5 +1,5 @@
 from unittest import TestCase
-import mdat
+from mdat import core
 
 __author__ = 'pbc'
 
@@ -7,18 +7,18 @@ __author__ = 'pbc'
 class TestFuzzyMeasure(TestCase):
     def test_init(self):
         # self.list_of_members = frozenset([])
-        fm = mdat.FuzzyMeasure()
+        fm = core.FuzzyMeasure()
         self.assertEqual(len(fm.list_of_members), 0)
 
-        fm = mdat.FuzzyMeasure()
+        fm = core.FuzzyMeasure()
         self.assertEqual(len(fm.list_of_members), 0)
 
         criteria = {'c1': .9, 'c2': 1, 'c3': .6}
-        fm = mdat.FuzzyMeasure(criteria)
+        fm = core.FuzzyMeasure(criteria)
         self.assertEqual(len(fm.list_of_members),3)
 
     def test_store_criteria(self):
-        fm = mdat.FuzzyMeasure()
+        fm = core.FuzzyMeasure()
         criteria = {'c1': .9, 'c2': 1, 'c3': .6}
         fm.store_criteria(criteria)
         criteria_labels = set(['c1','c2','c3'])
@@ -27,13 +27,13 @@ class TestFuzzyMeasure(TestCase):
 
     def test_make_all_subsets(self):
         list_of_members = set([])
-        fm = mdat.FuzzyMeasure()
+        fm = core.FuzzyMeasure()
         fm.list_of_members = frozenset(['a','b','c','d','e','f','g','h','i','j','k','l','m'])
         fm.make_all_subsets()
         self.assertEqual(len(fm.set_of_all_subsets), 2**len(fm.list_of_members))
 
     def test_set_fm_for_trivial_cases(self):
-        fm = mdat.FuzzyMeasure()
+        fm = core.FuzzyMeasure()
         fm.list_of_members = frozenset([1,2,3,4,5])
         fm.make_all_subsets()
         fm.set_fm_for_trivial_cases()
@@ -42,7 +42,7 @@ class TestFuzzyMeasure(TestCase):
 
     def test_set_fm_for_singleton_sets(self):
         # initialize FuzzyMeasure instance
-        fm = mdat.FuzzyMeasure()
+        fm = core.FuzzyMeasure()
         criteria = {'c1': .9, 'c2': 1, 'c3': .6}
         fm.store_criteria(criteria)
         fm.make_all_subsets()
@@ -57,7 +57,7 @@ class TestFuzzyMeasure(TestCase):
     def test_set_fm_for_complex_sets(self):
         # initialize FuzzyMeasure instance
         criteria = {'c1': .9, 'c2': .8, 'c3': .6, 'c4': .2}
-        fm = mdat.FuzzyMeasure(criteria)
+        fm = core.FuzzyMeasure(criteria)
         #print fm.mu
 
         self.assertEqual(1, 1)

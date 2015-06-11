@@ -1,5 +1,5 @@
 from unittest import TestCase
-import mdat
+from mdat import core
 import json
 import jsonschema
 
@@ -32,7 +32,7 @@ class TestBestAlternative(TestCase):
                 }
             }
         '''
-        ba = mdat.BestAlternative(jsonScores=jsonString)
+        ba = core.BestAlternative(jsonScores=jsonString)
         ba.setup(jsonScores=json.loads(jsonString))
         self.assertEqual(1, 1)
 
@@ -74,7 +74,7 @@ class TestBestAlternative(TestCase):
             }
         '''
 
-        ba = mdat.BestAlternative(jsonScores=jsonString)
+        ba = core.BestAlternative(jsonScores=jsonString)
         asserted_result = '''
             {
                 "best_alternative": "fit",
