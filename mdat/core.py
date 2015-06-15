@@ -232,8 +232,8 @@ class BestAlternative:
             self.scores=scores
             return(None)
         if len(jsonScores) > 0:
-            self.setup(json.loads(jsonScores, parse_float=Decimal))
-            self.scores=json.loads(jsonScores, parse_float=Decimal)
+            self.setup(json.loads(jsonScores))
+            self.scores=json.loads(jsonScores)
             return(None)
         if len(csvScores) > 0:
             print("error: csv input is not yet supported")
@@ -273,7 +273,7 @@ class BestAlternative:
                 }
             }
         '''
-        jsonschema.validate(jsonScores, json.loads(schema,parse_float=Decimal))
+        jsonschema.validate(jsonScores, json.loads(schema))
 
     def get_criteria(self):
         '''return a list containing labels for each criterium'''
@@ -316,6 +316,27 @@ class BestAlternative:
         #     store ChoquetIntegral keyed on alternative_label
         #
         # return alternative_label for the highest stored choquetIntegral
+
+
+        dict_of_choquet = {}
+
+        list_of_criteria = self.get_criteria()
+        dict_of_criteria_sums = self.sum_of_criteria_values()
+        print dict_of_criteria_sums
+        fuzzy = FuzzyMeasure(criteria=dict_of_criteria_sums)
+        print fuzzy.mu
+
+        list_of_alternatives = self.get_alternatives()
+
+        for alternative in list_of_alternatives:
+            values_of_alternative =  self.get_values_for_an_alternative(alternative)
+            choquet_int = ChoquetIntegral(criteria=values_of_alternative,fuzzy_measure=fuzzy.mu)
+            dict_of_choquet[alternative] = choquet_int.calculate()
+            choquet_int.close()
+
+        print dict_of_choquet
+
+
         resultJSONString = '''
             {
                 "best_alternative": "fit",

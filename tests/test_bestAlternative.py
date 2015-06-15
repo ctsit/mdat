@@ -47,9 +47,9 @@ class TestBestAlternative(TestCase):
 
     def test_sum_of_criteria_values(self):
         ba = core.BestAlternative(jsonScores=jsonString)
-        ba.setup(jsonScores=json.loads(jsonString,parse_float=Decimal))
+        ba.setup(jsonScores=json.loads(jsonString))
         dict_of_sums = ba.sum_of_criteria_values()
-        expected_output = {u'duration': Decimal('2.4'), u'comfort': Decimal('1.5'), u'accuracy': Decimal('0.6'), u'time': Decimal('0.9')}
+        expected_output = {u'duration': 2.4000000000000004, u'comfort': 1.5, u'accuracy': 0.6, u'time': 0.9}
         self.assertEqual(dict_of_sums, expected_output)
 
     def test_get_alternatives(self):
@@ -62,9 +62,9 @@ class TestBestAlternative(TestCase):
     def test_get_values_for_an_alternative(self):
         ba = core.BestAlternative(jsonScores=jsonString)
         ba.setup(jsonScores=json.loads(jsonString))
-        col_values = {u'duration': Decimal('0.9'), u'comfort': Decimal('0.6'), u'accuracy': Decimal('0.3'), u'time': Decimal('0.2')}
-        fit_values = {u'duration': Decimal('0.7'), u'comfort': Decimal('0.4'), u'accuracy': Decimal('0.1'), u'time': Decimal('0.4')}
-        sig_values = {u'duration': Decimal('0.8'), u'comfort': Decimal('0.5'), u'accuracy': Decimal('0.2'), u'time': Decimal('0.3')}
+        col_values = {u'duration': 0.9, u'comfort': 0.6, u'accuracy': 0.3, u'time': 0.2}
+        fit_values = {u'duration': 0.7, u'comfort': 0.4, u'accuracy': 0.1, u'time': 0.4}
+        sig_values = {u'duration': 0.8, u'comfort': 0.5, u'accuracy': 0.2, u'time': 0.3}
         self.assertEqual(ba.get_values_for_an_alternative('sig'),sig_values)
         self.assertEqual(ba.get_values_for_an_alternative('fit'),fit_values)
         self.assertEqual(ba.get_values_for_an_alternative('col'),col_values)
