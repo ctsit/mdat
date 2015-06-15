@@ -282,20 +282,27 @@ class BestAlternative:
 
     def sum_of_criteria_values(self):
         '''return a dictionary of the sum of each criterium across the alternatives keyed on the criteria labels'''
-        dict_of_sums = {}
+        dict_of_criteria_sums = {}
         list_of_criteria = self.get_criteria()
         for criteria in list_of_criteria:
-            dict_of_sums[criteria] = sum(self.scores[criteria].values())
+            dict_of_criteria_sums[criteria] = sum(self.scores[criteria].values())
 
-        return dict_of_sums
+        return dict_of_criteria_sums
 
     def get_alternatives(self):
         '''return a list containing the labels for each alternative'''
-        pass
+        list_of_criteria = self.get_criteria()
+        list_of_alternatives = self.scores[list_of_criteria[0]].keys()
+        return list_of_alternatives
 
-    def get_values_for_an_alternative(self):
+    def get_values_for_an_alternative(self,alternative):
         '''return a dictionary of values for a single alternative, keyed on criterium'''
-        pass
+        dict_of_values_for_alternatives = {}
+        list_of_criteria = self.get_criteria()
+        for criteria in list_of_criteria:
+            dict_of_values_for_alternatives[criteria] = self.scores[criteria][alternative]
+        return dict_of_values_for_alternatives
+
 
     def calculate(self):
         # get_criteria from input
@@ -321,3 +328,14 @@ class BestAlternative:
         '''
         result = json.loads(resultJSONString)
         return(result)
+
+
+        # calculate the sums of the alternatives
+        #     list_of_criteria = self.get_criteria()
+        # list_of_alternatives = self.get_alternatives()
+        # dict_of_alternative_sums = {}
+        # for alternatives in list_of_alternatives:
+        #     dict_of_alternative_sums[alternatives] = 0
+        # for criteria in list_of_criteria:
+        #     for alternatives in list_of_alternatives:
+        #         dict_of_alternative_sums[alternatives] += self.scores[criteria][alternatives]
