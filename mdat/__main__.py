@@ -2,9 +2,9 @@ import json
 import sys
 import argparse
 from core import BestAlternative
+import csv
 
 __author__ = 'pbc'
-
 
 def main():
     '''
@@ -56,7 +56,8 @@ def main():
 
     Usage:
 
-        usage: mdat.py [-h] [-i {json}] [-o {json,brief}] [infile] [outfile]
+        usage: mdat [-h] [-i {json}] [-o {json,brief,csv,csvnoheader}]
+                    [infile] [outfile]
 
         Select the best of two or more alternatives given responses to a list of
         criteria
@@ -69,9 +70,9 @@ def main():
           -h, --help            show this help message and exit
           -i {json}, --input {json}
                                 Specify the file type used as input. Valid types: json
-          -o {json,brief}, --output {json,brief}
+          -o {json,brief,csv,csvnoheader}, --output {json,brief,csv,csvnoheader}
                                 Specify the file type used as input. Valid types:
-                                json, text
+                                json, brief, csv, csvnoheader
     '''
 
     # define the list of acceptable arguments
@@ -89,10 +90,10 @@ def main():
     parser.add_argument(
         '-o',
         '--output',
-        choices=['json', 'brief'],
+        choices=['json', 'brief', 'csv', 'csvnoheader'],
         dest='output',
         default='brief',
-        help='Specify the file type used as input. Valid types: json, text')
+        help='Specify the file type used as input. Valid types: json, brief, csv, csvnoheader')
 
     # prepare the arguments we were given
     args = parser.parse_args()
@@ -109,6 +110,21 @@ def main():
         args.outfile.write(json.dumps(ba.calculate()) + "\n")
     elif args.output == 'brief':
         args.outfile.write(ba.calculate()['best_alternative'] + "\n")
+    elif args.output == 'csv':
+        writer = csv.writer(args.outfile)
+        header = []
+        output = []
+        for alternative in ba.calculate()['choquet_scores']:
+            header.append(alternative)
+            output.append(ba.calculate()['choquet_scores'][alternative])
+        writer.writerow(header)
+        writer.writerow(output)
+    elif args.output == 'csvnoheader':
+        writer = csv.writer(args.outfile)
+        output = []
+        for alternative in ba.calculate()['choquet_scores']:
+            output.append(ba.calculate()['choquet_scores'][alternative])
+        writer.writerow(output)
     else:
         print "Unsupported output type"
         return()
