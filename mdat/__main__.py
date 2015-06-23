@@ -106,9 +106,9 @@ def main():
 
     # generate and return the output
     if args.output == 'json':
-        args.outfile.write(json.dumps(ba.calculate()))
+        args.outfile.write(json.dumps(ba.calculate()) + "\n")
     elif args.output == 'brief':
-        args.outfile.write(ba.calculate()['best_alternative'])
+        args.outfile.write(ba.calculate()['best_alternative'] + "\n")
     else:
         print "Unsupported output type"
         return()
