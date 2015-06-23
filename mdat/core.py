@@ -11,6 +11,7 @@ import random
 import operator
 import json
 import jsonschema
+import pprint
 from decimal import Decimal
 
 
@@ -317,46 +318,34 @@ class BestAlternative:
         #
         # return alternative_label for the highest stored choquetIntegral
 
-
         dict_of_choquet = {}
 
+        # get list of criteria
         list_of_criteria = self.get_criteria()
+        # get a dictionary that contains sums of each criteria
         dict_of_criteria_sums = self.sum_of_criteria_values()
-        print dict_of_criteria_sums
-        fuzzy = FuzzyMeasure(criteria=dict_of_criteria_sums)
-        print fuzzy.mu
 
+        # compute fuzzy measure
+        fuzzy = FuzzyMeasure(criteria=dict_of_criteria_sums)
+
+        # get list of alternatives
         list_of_alternatives = self.get_alternatives()
 
+        # calculate choquet integral for each alternative and return in dict alternative: choquet_integral
         for alternative in list_of_alternatives:
             values_of_alternative =  self.get_values_for_an_alternative(alternative)
-            choquet_int = ChoquetIntegral(criteria=values_of_alternative,fuzzy_measure=fuzzy.mu)
-            dict_of_choquet[alternative] = choquet_int.calculate()
-            choquet_int.close()
+            ci = ChoquetIntegral(criteria=values_of_alternative, fuzzyMeasure=fuzzy.mu)
+            dict_of_choquet[alternative] = ci.calculate()
 
-        print dict_of_choquet
+        sorted_dict = {}
 
+        # sort choquet_int_dictionary by highest values
+        sorted_dict = sorted(dict_of_choquet.items(), key=operator.itemgetter(1), reverse=True)
 
-        resultJSONString = '''
-            {
-                "best_alternative": "fit",
-                "choquet_scores": {
-                    "fit": 2.8,
-                    "sig": 1.2,
-                    "col": 2.0
-                }
-            }
-        '''
-        result = json.loads(resultJSONString)
-        return(result)
+        resultJSONString = { "best_alternative": sorted_dict[0][0] , "choquet_scores" : {
+            key : value for key,value in dict_of_choquet.items()}}
 
 
-        # calculate the sums of the alternatives
-        #     list_of_criteria = self.get_criteria()
-        # list_of_alternatives = self.get_alternatives()
-        # dict_of_alternative_sums = {}
-        # for alternatives in list_of_alternatives:
-        #     dict_of_alternative_sums[alternatives] = 0
-        # for criteria in list_of_criteria:
-        #     for alternatives in list_of_alternatives:
-        #         dict_of_alternative_sums[alternatives] += self.scores[criteria][alternatives]
+        result = json.dumps(resultJSONString)
+
+        return(resultJSONString)
