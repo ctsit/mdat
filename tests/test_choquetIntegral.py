@@ -1,5 +1,5 @@
 from unittest import TestCase
-import mdat
+from mdat import core
 
 __author__ = 'pbc'
 
@@ -8,7 +8,7 @@ class TestChoquetIntegral(TestCase):
   def test_get_criteria_keys_sorted_by_value(self):
     criteria = {'c1': .6, 'c2': .8, 'c3': .9, 'c4': .2}
     expected_key_order = ['c4', 'c1', 'c2', 'c3']
-    ci = mdat.ChoquetIntegral(criteria=criteria)
+    ci = core.ChoquetIntegral(criteria=criteria)
     ci.get_criteria_keys_sorted_by_value()
     # verify the correct attribute is set
     self.assertEqual(ci.criteria_keys_sorted_by_value, expected_key_order)
@@ -36,7 +36,7 @@ class TestChoquetIntegral(TestCase):
       frozenset(['c3']): 0.1875
     }
     expected_ChoquetIntegral = 0.66875
-    ci = mdat.ChoquetIntegral(criteria=criteria, fuzzyMeasure=fuzzyMeasure)
+    ci = core.ChoquetIntegral(criteria=criteria, fuzzyMeasure=fuzzyMeasure)
     self.assertAlmostEquals(ci.calculate(), expected_ChoquetIntegral)
 
     # Run second test
@@ -58,5 +58,5 @@ class TestChoquetIntegral(TestCase):
     }
 
     expected_ChoquetIntegral = 0.2464030107
-    ci2 = mdat.ChoquetIntegral(criteria=criteria, fuzzyMeasure=fuzzyMeasure)
+    ci2 = core.ChoquetIntegral(criteria=criteria, fuzzyMeasure=fuzzyMeasure)
     self.assertAlmostEquals(ci2.calculate(), expected_ChoquetIntegral)

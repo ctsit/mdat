@@ -1,0 +1,67 @@
+{
+    "Accuracy": {
+        "Fecal Immunochemical Test": 0.1,
+        "Flexible Sigmoidoscopy": 0.2,
+        "Colonoscopy": 0.3
+    },
+    "Amount of colon examined": {
+        "Fecal Immunochemical Test": 0.5,
+        "Flexible Sigmoidoscopy": 0.7,
+        "Colonoscopy": 0.8
+    },
+    "Complications": {
+        "Fecal Immunochemical Test": 0.2,
+        "Flexible Sigmoidoscopy": 0.1,
+        "Colonoscopy": 0.9
+    },
+    "Cost": {
+        "Fecal Immunochemical Test": 0.4,
+        "Flexible Sigmoidoscopy": 0.8,
+        "Colonoscopy": 0.9
+    },
+    "Discomfort": {
+        "Fecal Immunochemical Test": 0.1,
+        "Flexible Sigmoidoscopy": 0.3,
+        "Colonoscopy": 0.9
+    },
+    "Frequency": {
+        "Fecal Immunochemical Test": 0.1,
+        "Flexible Sigmoidoscopy": 0.2,
+        "Colonoscopy": 0.3
+    },
+    "Location": {
+        "Fecal Immunochemical Test": 0.8,
+        "Flexible Sigmoidoscopy": 0.6,
+        "Colonoscopy": 0.5
+    },
+    "Further Testing": {
+        "Fecal Immunochemical Test": 0.2,
+        "Flexible Sigmoidoscopy": 0.5,
+        "Colonoscopy": 0.1
+    },
+    "Sedation": {
+        "Fecal Immunochemical Test": 1.0,
+        "Flexible Sigmoidoscopy": 0.8,
+        "Colonoscopy": 0.9
+    },
+    "Test Preparation": {
+        "Fecal Immunochemical Test": 0.1,
+        "Flexible Sigmoidoscopy": 0.2,
+        "Colonoscopy": 1.0
+    },
+    "Scientific Evidence": {
+        "Fecal Immunochemical Test": 0.3,
+        "Flexible Sigmoidoscopy": 0.4,
+        "Colonoscopy": 0.5
+    },
+    "Time": {
+        "Fecal Immunochemical Test": 0.5,
+        "Flexible Sigmoidoscopy": 0.6,
+        "Colonoscopy": 0.7
+    },
+    "Responsibilities": {
+        "Fecal Immunochemical Test": 0.3,
+        "Flexible Sigmoidoscopy": 0.6,
+        "Colonoscopy": 0.9
+    }
+}

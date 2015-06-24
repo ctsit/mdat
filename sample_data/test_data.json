@@ -1,0 +1,22 @@
+{
+    "accuracy": {
+        "fit": 0.1,
+        "sig": 0.2,
+        "col": 0.3
+    },
+    "comfort": {
+        "fit": 0.5,
+        "sig": 0.7,
+        "col": 0.8
+    },
+    "duration": {
+        "fit": 0.8,
+        "sig": 0.7,
+        "col": 1.0
+    },
+    "time": {
+        "fit": 0.2,
+        "sig": 0.3,
+        "col": 0.4
+    }
+}
