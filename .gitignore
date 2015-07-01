@@ -58,3 +58,7 @@ target/
 
 # PyCharm stuff
 .idea
+
+# Folder for developer's untracked files
+private/
+venv/

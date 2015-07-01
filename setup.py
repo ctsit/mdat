@@ -1,5 +1,7 @@
 from setuptools import setup
 
+# @see https://pythonhosted.org/setuptools/setuptools.html
+
 setup(
     name='mdat',
     version='0.3.0',
@@ -11,7 +13,7 @@ setup(
     description='A decision aid designed to select the best of two or more alternatives given responses to a list of criteria',
     long_description=open('README.md').read(),
     install_requires=[
-        "jsonschema",
+        "jsonschema == 2.5.1",
     ],
     entry_points={
         'console_scripts': [
@@ -19,8 +21,7 @@ setup(
         ],
     },
     tests_require=[
-        "pytest",
-        "jsonschema",
+        "jsonschema == 2.5.1",
     ],
     test_suite='tests',
 )
