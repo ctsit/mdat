@@ -22,6 +22,7 @@ setup(
     },
     tests_require=[
         "jsonschema == 2.5.1",
+        "coverage",
     ],
     test_suite='tests',
 )

@@ -2,15 +2,28 @@
 help:
 	@echo
 	@echo "Available tasks:"
-	@echo "  test           : execute python setup.py test"
-	@echo "  sdist          : execute python setup.py sdist"
+	@echo "  test           : execute 'python setup.py test'"
+	@echo "  coverage       : run and show text coverage report"
+	@echo "  coverage_html  : run and show html coverage report"
+	@echo "  sdist          : execute 'python setup.py sdist'"
 	@echo "  pypi_register  : register the mdat PyPI package"
 	@echo "  pypi_upload    : upload the mdat package to PyPI"
 	@echo "  clean          : remove generated files"
 	@echo
 
 test:
+	# Note: Please run 'make coverage' to get code coverage reports with all tests
 	python setup.py test
+
+_coverage_:
+	coverage run --source mdat setup.py test
+
+coverage: _coverage_
+	coverage report -m
+
+coverage_html: _coverage_
+	coverage html
+	open htmlcov/index.html
 
 sdist:
 	python setup.py sdist
@@ -34,3 +47,6 @@ pypi_upload: pypi_config
 clean:
 	find . -type f -name "*.pyc" -print | xargs rm -f
 	@rm -rf out dist build *.egg-info *.egg
+	@rm -rf htmlcov
+	@rm -rf .coverage
+	@rm -rf .eggs
