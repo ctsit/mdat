@@ -2,10 +2,9 @@
 
 ## Medical Decision Aid Tool
 
-Master branch: [![Build Status](https://travis-ci.org/ctsit/mdat.svg?branch=master)](https://travis-ci.org/ctsit/mdat)
+[![Build Status](https://travis-ci.org/ctsit/mdat.svg?branch=master)](https://travis-ci.org/ctsit/mdat?branch=master)
 [![Coverage Status](https://coveralls.io/repos/ctsit/mdat/badge.svg?branch=master&service=github)](https://coveralls.io/github/ctsit/mdat?branch=master)
-
-Develop branch: [![Build Status](https://travis-ci.org/ctsit/mdat.svg?branch=develop)](https://travis-ci.org/ctsit/mdat)
+[![Build Status](https://travis-ci.org/ctsit/mdat.svg?branch=develop)](https://travis-ci.org/ctsit/mdat?branch=develop)
 [![Coverage Status](https://coveralls.io/repos/ctsit/mdat/badge.svg?branch=develop&service=github)](https://coveralls.io/github/ctsit/mdat?branch=develop)
 
 The MDAT is a set of software libraries to implement a _medical decision aid_.  These libraries are designed to select the best of two or more alternatives given responses to a list of criteria.
